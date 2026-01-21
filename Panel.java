@@ -3,19 +3,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.sql.Time;
+
 
 public class Panel extends JPanel{
-    private int blockHeight = 24;
-    private int blockWidth = 24;
+    private final int blockHeight = 20;
+    private final int blockWidth = 20;
 
     //How many blocks vertically and horizontally
-    private int columnAmount = 30;
-    private int rowAmount = 30;
+    private final int columnAmount = 30;
+    private final int rowAmount = 30;
 
     //Window Size
-    private int windowHeight = blockHeight * columnAmount;
-    private int windowWidth = blockWidth * rowAmount;
+    private final int windowHeight = blockHeight * columnAmount;
+    private final int windowWidth = blockWidth * rowAmount;
 
     //Player Coordinates and details
     private int playerX = 0;
@@ -75,6 +75,21 @@ public class Panel extends JPanel{
         if (keyChecker.dPressed){
             playerX += playerSpeed;
         }
+
+        //Keep player from going off screen
+        if (playerX < 0){
+            playerX = 0;
+        }
+        if (playerY < 0){
+            playerY = 0;
+        }
+        if (playerX > getWidth() - blockWidth){
+            playerX = getWidth() - blockWidth;
+        }
+        if (playerY > getHeight() - blockHeight){
+            playerY = getHeight() - blockHeight;
+        }
+
 
     }
 }
