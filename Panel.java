@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.sql.Time;
 
 public class Panel extends JPanel{
     private int blockHeight = 24;
@@ -13,9 +17,30 @@ public class Panel extends JPanel{
     private int windowHeight = blockHeight * columnAmount;
     private int windowWidth = blockWidth * rowAmount;
 
+    //Player Coordinates and details
+    private int playerX = 0;
+    private int playerY = 0;
+    private int playerSpeed = 5;
+
+    //KeyListener Instance
+    KeyChecker keyChecker = new KeyChecker();
+
+    //Timer for events
+    Timer timer;
+
     Panel(){
         this.setPreferredSize(new Dimension(windowWidth, windowHeight));
         this.setBackground(Color.BLACK);
+        this.addKeyListener(keyChecker);
+        this.setFocusable(true);
+
+        timer = new Timer(17, (e -> {
+            update();
+            repaint();
+        }));
+
+        timer.start();
+
     }
 
 
@@ -28,14 +53,28 @@ public class Panel extends JPanel{
     }
 
     @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        g.setColor(Color.white);
-        g.fillRect(0, 0, blockWidth, blockHeight);
+        g.setColor(Color.blue);
+        g.fillRect(playerX, playerY, blockWidth, blockHeight);
     }
 
     public void update(){
+
+        if (keyChecker.wPressed){
+            playerY -= playerSpeed;
+        }
+        if (keyChecker.aPressed){
+            playerX -= playerSpeed;
+        }
+        if (keyChecker.sPressed){
+            playerY += playerSpeed;
+        }
+        if (keyChecker.dPressed){
+            playerX += playerSpeed;
+        }
 
     }
 }

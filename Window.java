@@ -15,6 +15,8 @@ public class Window {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.add(panel);
+        panel.requestFocusInWindow();
+
 
 
 
